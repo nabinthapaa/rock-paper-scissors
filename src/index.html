@@ -1,15 +1,18 @@
+<!DOCTYPE html>
 <html>
     <head>
         <title>Rock Paper Scissor</title>
         <link rel="stylesheet" href="style.css" >
+        <script defer src="script.js" > </script>
     </head>
     <body>
+        <div class="wrapper">
         <div class="rules" id="rules">
             <div class="close-rules">
                 <p class="font-bold text-large">
                     RULES
                 </p>
-            <button class="close-rules-cross">
+            <button class="close-rules-cross" id="cross">
                 <img src="../images/icon-close.svg" alt="Cross" />
             </button>
             </div>
@@ -25,13 +28,17 @@
 
             <div class="score-card">
                 <p class="font-medium">Score</p>
-                <p class="font-bold text-large">12</p>
+                <p id="score" class="font-bold text-large">12</p>
             </div>
 
         </div>
 
+        <!-- Winner Screen -->
+            <main id="selected" class="selected main" hidden >
+            </main>
+
         <!-- Main content -->
-        <main class="main">
+        <main id="selection" class="main"  >
             <div class="items-container">
                 <span class="bar h"></span>
                 <span class="bar s-l"></span>
@@ -61,10 +68,12 @@
                 </div>
             </div>
         </main>
-        <!-- Main content -->
+        <!-- Main content End -->
+
         <div class="rules-btn-wrapper">
-            <button class="rules-button">Rules</button>
+            <button class="rules-button" id="rules-button">Rules</button>
         </div>
 
+        </div>
     </body>
 </html>

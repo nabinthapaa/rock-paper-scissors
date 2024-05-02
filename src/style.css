@@ -1,28 +1,3 @@
-/*
-*
-### Primary
-
-- Scissors Gradient: hsl(39, 89%, 49%) to hsl(40, 84%, 53%)
-- Paper Gradient: hsl(230, 89%, 62%) to hsl(230, 89%, 65%)
-- Rock Gradient: hsl(349, 71%, 52%) to hsl(349, 70%, 56%)
-- Lizard Gradient: hsl(261, 73%, 60%) to hsl(261, 72%, 63%)
-- Cyan: hsl(189, 59%, 53%) to hsl(189, 58%, 57%)
-
-### Neutral
-
-- Dark Text: hsl(229, 25%, 31%)
-- Score Text: hsl(229, 64%, 46%)
-- Header Outline: hsl(217, 16%, 45%)
-
-### Background
-
-- Radial Gradient: hsl(214, 47%, 23%) to hsl(237, 49%, 15%)
-
-## Fonts
-
-- Family: [Barlow Semi Condensed](https://fonts.google.com/specimen/Barlow+Semi+Condensed)
-- Weights: 600, 700
-*/
 @import url('https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 :root{
@@ -53,22 +28,24 @@
     /* Lizard colors */
     --bg-lizard-gradient-start: hsl(261, 73%, 60%);
     --bg-lizard-gradient-end: hsl(261, 72%, 63%);
+}
 
-    --bg-winner-gradient: radial-gradient(hsl(214, 47%, 23%), hsl(237, 49%, 15%));
-
+[hidden]{
+    display: none !important
 }
 
 body{
-    font-family:"Barlow Semi Condensed";
+    font-family:"Barlow Semi Condensed", "system-ui", serif;
+    background-image: var(--bg-gradient);
+
+}
+
+.wrapper{
     max-width: 1366px;
     margin-inline: auto;
     height: 100vh;
     max-height: 100vh;
-
-    overflow-y: hidden;
     position: relative;
-    background-image: var(--bg-gradient);
-
 }
 
 img{
@@ -101,7 +78,11 @@ img{
     left: 50%;
     transform: translate(-50%, -1500%);
 
-    trasition: transform 500ms ease-in;
+    z-index: 100000;
+    box-shadow: 14px 71px 300px 164px rgba(0,0,0,0.35);
+    -webkit-box-shadow: 14px 71px 300px 164px rgba(0,0,0,0.35);
+    -moz-box-shadow: 14px 71px 300px 164px rgba(0,0,0,0.35);
+    transition: transform 700ms ease-in-out;
 
 
     padding:0 1rem 1rem 1rem;
@@ -189,6 +170,39 @@ img{
 }
 
 .main{
+    &.selected{
+        display: flex;
+        justify-content: space-around;
+    }
+
+    #user-selected, #house-selected{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: white;
+    }
+
+    .result{
+        color: white;
+        text-align: center;
+
+        & > *{
+            text-transform: uppercase;
+        }
+
+        .play-again{
+            background: white;
+            padding:1em 5em;
+            width:min(100%, 400px);
+
+            cursor: pointer;
+            border: none;
+            border-radius: 0.5em;
+        }
+    }
+}
+
+.main{
     width: 80%;
     height: 80%;
     display: grid;
@@ -196,11 +210,13 @@ img{
     margin-inline: auto;
     margin-block: auto;
 
+
+
     .items-container{
-        --column-gap: 5rem;
+        --column-gap: 10rem;
         --row-gap: 1.5rem;
-        --bar-height: 10px;
-        --items-height: 150px;
+        --bar-height: calc(var(--column-gap) / 5);
+        --items-height:calc(var(--column-gap) * 2);
 
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -213,7 +229,8 @@ img{
         .bar{
             height: var(--bar-height);
             width: 50%;
-            background: black;
+            background-image: linear-gradient(var(--bg-paper-gradient-start), var(--bg-paper-gradient-end));
+            opacity: 0.2;
             position: absolute;
         }
 
@@ -223,11 +240,11 @@ img{
         }
 
         .bar.s-l{
-            transform: rotate(60deg) translateY(60px);
+            transform: rotate(60deg) translateY(calc(calc(calc(var(--column-gap) / 4) - var(--bar-height) + calc(var(--items-height) / 2))));
         }
 
         .bar.s-r{
-            transform: rotate(-60deg) translateY(60px);
+            transform: rotate(-60deg) translateY(calc(calc(calc(var(--column-gap) / 4) - var(--bar-height) + calc(var(--items-height) / 2))));
         }
     }
 
@@ -260,7 +277,7 @@ img{
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 80%;
+            width:calc(var(--column-gap)* 1.5);
             aspect-ratio: 1;
             border-radius: 50%;
             background: whitesmoke;
@@ -270,9 +287,17 @@ img{
             background: none;
             border: none;
             cursor: pointer;
+            width: var(--column-gap);
 
             z-index: 1000;
         }
     }
 }
 
+@media only screen and (max-width: 413px){
+    .items-container{
+        --column-gap: 10rem;
+        --row-gap: 1.5rem;
+    }
+
+}
