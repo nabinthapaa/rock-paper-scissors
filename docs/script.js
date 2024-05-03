@@ -34,7 +34,7 @@ function getCard(item, operator){
                         <div class="items ${item}">
                             <button id="${item}">
                                 <div class="image">
-                                    <img src="../images/icon-${item}.svg" alt="Scissors" />
+                                    <img src="./images/icon-${item}.svg" alt=${item}/>
                                 </div>
                             </button>
                         </div>
