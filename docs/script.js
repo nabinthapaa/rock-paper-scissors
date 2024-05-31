@@ -1,33 +1,32 @@
-console.log("script loaded");
 const paper = document.getElementById("paper");
 const rock = document.getElementById("rock");
 const scissors = document.getElementById("scissors");
 const rules_button = document.getElementById("rules-button");
 const rules = document.getElementById("rules");
 const selection = document.getElementById("selection");
-const selected =  document.getElementById("selected");
+const selected = document.getElementById("selected");
 const score_ele = document.getElementById("score");
 
 let is_rules_open = false;
 let score = 0;
 score_ele.innerText = score;
 
-function getHouseSelected(){
+function getHouseSelected() {
     let selected = "";
-    const get_random = Math.random() * 3;
+    const get_random = Math.random() * 10;
 
-    if(get_random <= 1){
+    if (get_random <= 3.5) {
         selected = "paper";
-    }else if(get_random <=2){
+    } else if (get_random <= 7.5) {
         selected = "scissors";
-    }else{
+    } else {
         selected = "rock"
     }
 
     return selected;
 };
 
-function getCard(item, operator){
+function getCard(item, operator) {
     return `
                     <div id="${operator}-selected" class="items-container">
                         <p class="font-bold text-medium">${operator === "user" ? "You" : "House"} Picked</p>
@@ -42,21 +41,21 @@ function getCard(item, operator){
     `
 }
 
-function isUserWinner(user, house){
-    if(user === house){
-        return false;
-    }else if(user === "paper" && house === "rock"){
+function isUserWinner(user, house) {
+    if (user === house) {
+        return 'draw';
+    } else if (user === "paper" && house === "rock") {
         return true;
-    }else if(user === "scissors" && house === "paper"){
+    } else if (user === "scissors" && house === "paper") {
         return true;
-    }else if(user === "rock" && house === "scissors"){
+    } else if (user === "rock" && house === "scissors") {
         return true;
-    } else{
+    } else {
         return false;
     }
 }
 
-function getMiddle(is_winner){
+function getMiddle(is_winner) {
     let winner = `
                     <div class="result">
                         <p class="font-bold text-large">You Win</p>
@@ -73,7 +72,16 @@ function getMiddle(is_winner){
                         </button>
                     </div>
 `
-    return is_winner ? winner: looser;
+
+    let draw = `
+                    <div class="result">
+                        <p class="font-bold text-large">It's a draw</p>
+                        <button id="play-again" class="play-again">
+                            Play again
+                        </button>
+                    </div>
+`
+    return is_winner === "draw" ? draw : is_winner ? winner : looser;
 }
 
 rules_button.addEventListener("click", e => {
@@ -88,10 +96,10 @@ rules_button.addEventListener("click", e => {
 });
 
 
-document.addEventListener("click", e=>{
-        if(!rules.contains(e.target) && !is_rules_open){
-            rules.setAttribute("style", "transform: translate(-50%, -1500%)");
-            is_rules_open = false;
+document.addEventListener("click", e => {
+    if (!rules.contains(e.target) && !is_rules_open) {
+        rules.setAttribute("style", "transform: translate(-50%, -1500%)");
+        is_rules_open = false;
     }
 });
 
@@ -99,8 +107,8 @@ document.addEventListener("click", e=>{
 const items = [paper, rock, scissors];
 
 items.forEach(item => {
-    item.addEventListener("click", e =>{
-        if(is_rules_open) return;
+    item.addEventListener("click", e => {
+        if (is_rules_open) return;
         console.log(item.getAttribute("id"));
         selection.setAttribute("hidden", true);
         const house_selected = getHouseSelected();
@@ -109,7 +117,7 @@ items.forEach(item => {
         const is_winner = isUserWinner(user_selected, house_selected);
 
         const middle = getMiddle(is_winner);
-        if(is_winner){
+        if (is_winner) {
             score++;
         };
 
@@ -124,3 +132,6 @@ items.forEach(item => {
         });
     });
 });
+
+// TODO-Add animations with GSAP
+
